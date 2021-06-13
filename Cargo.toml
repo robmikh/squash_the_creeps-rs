@@ -1,0 +1,11 @@
+[package]
+name = "squash_the_creeps"
+version = "0.1.0"
+authors = ["robmikh <rob.mikh@outlook.com>"]
+edition = "2018"
+
+[dependencies]
+gdnative = "0.9.3"
+
+[lib]
+crate-type = ["cdylib"]

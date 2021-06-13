@@ -1,0 +1,7 @@
+/target
+Cargo.lock
+
+#Godot stuff
+/.import
+export.cfg
+export_presets.cfg
