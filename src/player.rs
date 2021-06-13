@@ -14,21 +14,20 @@ pub struct Player {
 
 #[methods]
 impl Player {
-    fn register_player(_builder: &ClassBuilder<Self>) {
-    }
+    fn register_player(_builder: &ClassBuilder<Self>) {}
 
     fn new(_owner: &KinematicBody) -> Self {
         Self {
             speed: 14.0,
             fall_acceleration: 75.0,
-            velocity: Vector3::zero(),
+            velocity: Vector3::ZERO,
         }
     }
 
     #[export]
     fn _physics_process(&mut self, owner: &KinematicBody, delta: f32) {
         let input = Input::godot_singleton();
-        let mut direction = Vector3::zero();
+        let mut direction = Vector3::ZERO;
 
         if input.is_action_pressed("move_left") {
             direction.x -= 1.0;
@@ -43,12 +42,10 @@ impl Player {
             direction.z += 1.0;
         }
 
-        if direction != Vector3::zero() {
-            direction = direction.normalize();
-            let pivot = unsafe {
-                owner.get_node_as::<Spatial>("Pivot").unwrap()
-            };
-            pivot.look_at(owner.translation() + direction, Vector3::new(0.0, 1.0, 0.0));
+        if direction != Vector3::ZERO {
+            direction = direction.normalized();
+            let pivot = unsafe { owner.get_node_as::<Spatial>("Pivot").unwrap() };
+            pivot.look_at(owner.translation() + direction, Vector3::UP);
         }
 
         // Ground velocity
@@ -58,13 +55,13 @@ impl Player {
         self.velocity.y -= self.fall_acceleration * delta;
         // Moving the character
         owner.move_and_slide(
-            self.velocity, 
-            Vector3::new(0.0, 1.0, 0.0),
+            self.velocity,
+            Vector3::UP,
             // Defaults listed in the documentation
             false,
             4,
-            -0.785398,
-            true
+            0.785398,
+            true,
         );
     }
 }
