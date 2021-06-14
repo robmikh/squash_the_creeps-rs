@@ -9,7 +9,7 @@ extents = Vector3( 0.815, 0.267, 0.92 )
 [node name="Mob" type="KinematicBody" groups=[
 "mob",
 ]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.405005, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0114588, 0 )
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 2 )
@@ -17,13 +17,14 @@ script = ExtResource( 2 )
 [node name="Pivot" type="Spatial" parent="."]
 
 [node name="Character" parent="Pivot" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 0.989268, 0.146113, 0, -0.146113, 0.989268, 0, 0.34652, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27495, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.52793, 0 )
 shape = SubResource( 1 )
 
 [node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.303757, 0 )
-aabb = AABB( -1.20826, -0.703192, -1.95589, 2.41652, 1.40638, 3.91178 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.062134, 0.331645 )
+aabb = AABB( -1.19986, 0.251327, -1.57098, 2.41047, 1.09305, 3.17223 )
 
 [connection signal="screen_exited" from="VisibilityNotifier" to="." method="on_visibility_screen_exited"]

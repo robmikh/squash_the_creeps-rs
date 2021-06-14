@@ -7,8 +7,8 @@
 radius = 0.800207
 
 [sub_resource type="CylinderShape" id=2]
-radius = 1.06349
-height = 0.196765
+radius = 2.16651
+height = 0.402154
 
 [node name="Player" type="KinematicBody"]
 collision_mask = 6
@@ -17,9 +17,10 @@ script = ExtResource( 2 )
 [node name="Pivot" type="Spatial" parent="."]
 
 [node name="Character" parent="Pivot" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 0.999711, 0.0240511, 0, -0.0240511, 0.999711, 0, 0.335971, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00454438, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.771765, 0 )
 shape = SubResource( 1 )
 
 [node name="MobDetector" type="Area" parent="."]
@@ -28,7 +29,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="MobDetector"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558226, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.879835, 0 )
 shape = SubResource( 2 )
 
 [connection signal="body_entered" from="MobDetector" to="." method="on_mob_detector_body_entered"]
