@@ -6,7 +6,6 @@ use crate::mob::Mob;
 #[derive(NativeClass)]
 #[inherit(Node)]
 #[user_data(user_data::MutexData<Main>)]
-#[register_with(Self::register_main)]
 pub struct Main {
     #[property]
     mob: Ref<PackedScene>,
@@ -14,8 +13,6 @@ pub struct Main {
 
 #[methods]
 impl Main {
-    fn register_main(_builder: &ClassBuilder<Self>) {}
-
     fn new(_owner: &Node) -> Self {
         Self {
             mob: PackedScene::new().into_shared(),

@@ -4,7 +4,6 @@ use rand::Rng;
 #[derive(NativeClass)]
 #[inherit(KinematicBody)]
 #[user_data(user_data::MutexData<Mob>)]
-#[register_with(Self::register_mob)]
 pub struct Mob {
     #[property(default = 10.0)]
     min_speed: f32,
@@ -15,8 +14,6 @@ pub struct Mob {
 
 #[methods]
 impl Mob {
-    fn register_mob(_builder: &ClassBuilder<Self>) {}
-
     fn new(_owner: &KinematicBody) -> Self {
         Self {
             min_speed: 10.0,

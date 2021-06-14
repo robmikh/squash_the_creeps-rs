@@ -3,7 +3,6 @@ use gdnative::prelude::*;
 #[derive(NativeClass)]
 #[inherit(KinematicBody)]
 #[user_data(user_data::MutexData<Player>)]
-#[register_with(Self::register_player)]
 pub struct Player {
     #[property(default = 14.0)]
     speed: f32,
@@ -14,8 +13,6 @@ pub struct Player {
 
 #[methods]
 impl Player {
-    fn register_player(_builder: &ClassBuilder<Self>) {}
-
     fn new(_owner: &KinematicBody) -> Self {
         Self {
             speed: 14.0,
