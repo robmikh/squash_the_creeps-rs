@@ -1,4 +1,4 @@
-use gdnative::prelude::*;
+use gdnative::{api::AnimationPlayer, prelude::*};
 
 use crate::mob::Mob;
 
@@ -62,10 +62,14 @@ impl Player {
             direction.z += 1.0;
         }
 
+        let pivot = unsafe { owner.get_node_as::<Spatial>("Pivot").unwrap() };
+        let player = unsafe { owner.get_node_as::<AnimationPlayer>("AnimationPlayer").unwrap() };
         if direction != Vector3::ZERO {
             direction = direction.normalized();
-            let pivot = unsafe { owner.get_node_as::<Spatial>("Pivot").unwrap() };
             pivot.look_at(owner.translation() + direction, Vector3::UP);
+            player.set_speed_scale(4.0);
+        } else {
+            player.set_speed_scale(1.0);
         }
 
         // Ground velocity
@@ -106,6 +110,10 @@ impl Player {
                 self.velocity.y = self.bounce_impulse;
             }
         }
+
+        let mut rotation = pivot.rotation();
+        rotation.x = std::f32::consts::PI / 6.0 * self.velocity.x / self.jump_impulse;
+        pivot.set_rotation(rotation);
     }
 
     #[export]
