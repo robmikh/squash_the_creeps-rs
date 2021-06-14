@@ -1,5 +1,4 @@
 use gdnative::prelude::*;
-use rand::Rng;
 
 #[derive(NativeClass)]
 #[inherit(KinematicBody)]

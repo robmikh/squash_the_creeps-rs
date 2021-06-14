@@ -1,5 +1,4 @@
-use gdnative::{api::PathFollow, prelude::*};
-use rand::Rng;
+use gdnative::prelude::*;
 
 use crate::mob::Mob;
 
