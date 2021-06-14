@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://art/player.glb" type="PackedScene" id=1]
 [ext_resource path="res://Player.gdns" type="Script" id=2]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.800207
+
+[sub_resource type="CylinderShape" id=2]
+radius = 1.06349
+height = 0.196765
 
 [node name="Player" type="KinematicBody"]
 collision_mask = 6
@@ -17,3 +21,14 @@ script = ExtResource( 2 )
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00454438, 0 )
 shape = SubResource( 1 )
+
+[node name="MobDetector" type="Area" parent="."]
+monitorable = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="MobDetector"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558226, 0 )
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="MobDetector" to="." method="on_mob_detector_body_entered"]

@@ -9,6 +9,7 @@ extents = Vector3( 0.815, 0.267, 0.92 )
 [node name="Mob" type="KinematicBody" groups=[
 "mob",
 ]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.405005, 0 )
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 2 )

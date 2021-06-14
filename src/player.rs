@@ -5,6 +5,7 @@ use crate::mob::Mob;
 #[derive(NativeClass)]
 #[inherit(KinematicBody)]
 #[user_data(user_data::MutexData<Player>)]
+#[register_with(Self::register_player)]
 pub struct Player {
     #[property(default = 14.0)]
     speed: f32,
@@ -19,6 +20,13 @@ pub struct Player {
 
 #[methods]
 impl Player {
+    fn register_player(builder: &ClassBuilder<Self>) {
+        builder.add_signal(Signal {
+            name: "hit",
+            args: &[],
+        });
+    }
+
     fn new(_owner: &KinematicBody) -> Self {
         Self {
             speed: 14.0,
@@ -26,6 +34,13 @@ impl Player {
             jump_impulse: 20.0,
             bounce_impulse: 16.0,
             velocity: Vector3::ZERO,
+        }
+    }
+
+    fn die(&mut self, owner: &KinematicBody) {
+        owner.emit_signal("hit", &[]);
+        unsafe {
+            owner.assume_unique().queue_free();
         }
     }
 
@@ -91,5 +106,10 @@ impl Player {
                 self.velocity.y = self.bounce_impulse;
             }
         }
+    }
+
+    #[export]
+    pub fn on_mob_detector_body_entered(&mut self, owner: &KinematicBody, _other: Ref<Node>) {
+        self.die(owner);
     }
 }
