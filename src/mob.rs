@@ -4,6 +4,7 @@ use rand::Rng;
 #[derive(NativeClass)]
 #[inherit(KinematicBody)]
 #[user_data(user_data::MutexData<Mob>)]
+#[register_with(Self::register_mob)]
 pub struct Mob {
     #[property(default = 10.0)]
     min_speed: f32,
@@ -14,11 +15,25 @@ pub struct Mob {
 
 #[methods]
 impl Mob {
+    fn register_mob(builder: &ClassBuilder<Self>) {
+        builder.add_signal(Signal {
+            name: "squashed",
+            args: &[],
+        });
+    }
+
     fn new(_owner: &KinematicBody) -> Self {
         Self {
             min_speed: 10.0,
             max_speed: 18.0,
             velocity: Vector3::ZERO,
+        }
+    }
+
+    pub fn squash(&mut self, owner: &KinematicBody) {
+        owner.emit_signal("squashed", &[]);
+        unsafe {
+            owner.assume_unique().queue_free();
         }
     }
 

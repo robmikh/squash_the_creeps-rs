@@ -1,5 +1,7 @@
 use gdnative::prelude::*;
 
+use crate::mob::Mob;
+
 #[derive(NativeClass)]
 #[inherit(KinematicBody)]
 #[user_data(user_data::MutexData<Player>)]
@@ -8,6 +10,10 @@ pub struct Player {
     speed: f32,
     #[property(default = 75.0)]
     fall_acceleration: f32,
+    #[property(default = 20.0)]
+    jump_impulse: f32,
+    #[property(default = 16.0)]
+    bounce_impulse: f32,
     velocity: Vector3,
 }
 
@@ -17,6 +23,8 @@ impl Player {
         Self {
             speed: 14.0,
             fall_acceleration: 75.0,
+            jump_impulse: 20.0,
+            bounce_impulse: 16.0,
             velocity: Vector3::ZERO,
         }
     }
@@ -48,10 +56,16 @@ impl Player {
         // Ground velocity
         self.velocity.x = direction.x * self.speed;
         self.velocity.z = direction.z * self.speed;
+        // Jumping
+        if owner.is_on_floor() && input.is_action_just_pressed("jump") {
+            self.velocity.y += self.jump_impulse;
+        }
+
         // Vertical velocity
         self.velocity.y -= self.fall_acceleration * delta;
+
         // Moving the character
-        owner.move_and_slide(
+        self.velocity = owner.move_and_slide(
             self.velocity,
             Vector3::UP,
             // Defaults listed in the documentation
@@ -60,5 +74,22 @@ impl Player {
             0.785398,
             true,
         );
+
+        for index in 0..owner.get_slide_count() {
+            let collision = owner.get_slide_collision(index).unwrap();
+            let collision = unsafe { collision.assume_safe() };
+            let collider = collision.collider().unwrap();
+            let collider = unsafe { collider.assume_safe() };
+            let collider = collider.cast::<Node>().unwrap();
+            if collider.is_in_group("mob") {
+                let mob = collider.cast::<KinematicBody>().unwrap();
+                let mob = mob.cast_instance::<Mob>().unwrap();
+                mob.map_mut(|mob, owner| {
+                    mob.squash(&owner);
+                })
+                .unwrap();
+                self.velocity.y = self.bounce_impulse;
+            }
+        }
     }
 }
