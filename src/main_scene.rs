@@ -32,9 +32,11 @@ impl Main {
         };
 
         let mut rng = rand::thread_rng();
-        mob_spawn_location.set_unit_offset(rng.gen_range(0.0..1.0));
+        //mob_spawn_location.set_unit_offset(rng.gen_range(0.0..1.0));
+        mob_spawn_location.set_unit_offset(0.625);
         let player = unsafe { owner.get_node_as::<KinematicBody>("Player").unwrap() };
         let player_position = player.transform().origin;
+        let player_position = Vector3::new(6.665353, 0.8057515, 6.870081);
 
         let mob_scene = unsafe { mob_scene.into_shared().assume_safe() };
         owner.add_child(mob_scene, false);
