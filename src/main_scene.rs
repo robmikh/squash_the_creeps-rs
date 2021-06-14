@@ -43,8 +43,25 @@ impl Main {
                 &mob_spawn_location.translation(),
                 &player_position,
             );
+            let ui = unsafe { owner.get_node_as::<Control>("UserInterface").unwrap() };
+            let label = unsafe { ui.get_node_as::<Label>("ScoreLabel").unwrap() };
+            mob_owner
+                .connect(
+                    "squashed",
+                    label,
+                    "on_mob_squashed",
+                    VariantArray::new_shared(),
+                    0,
+                )
+                .unwrap();
         })
         .unwrap();
+    }
+
+    #[export]
+    fn on_player_hit(&self, owner: &Node) {
+        let timer = unsafe { owner.get_node_as::<Timer>("MobTimer").unwrap() };
+        timer.stop();
     }
 }
 
