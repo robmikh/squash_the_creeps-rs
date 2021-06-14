@@ -63,13 +63,13 @@ impl Player {
         }
 
         let pivot = unsafe { owner.get_node_as::<Spatial>("Pivot").unwrap() };
-        let player = unsafe { owner.get_node_as::<AnimationPlayer>("AnimationPlayer").unwrap() };
+        let animation_player = unsafe { owner.get_node_as::<AnimationPlayer>("AnimationPlayer").unwrap() };
         if direction != Vector3::ZERO {
             direction = direction.normalized();
             pivot.look_at(owner.translation() + direction, Vector3::UP);
-            player.set_speed_scale(4.0);
+            animation_player.set_speed_scale(4.0);
         } else {
-            player.set_speed_scale(1.0);
+            animation_player.set_speed_scale(1.0);
         }
 
         // Ground velocity

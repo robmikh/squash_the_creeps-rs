@@ -1,4 +1,4 @@
-use gdnative::prelude::*;
+use gdnative::{api::AnimationPlayer, prelude::*};
 use rand::Rng;
 
 #[derive(NativeClass)]
@@ -53,6 +53,9 @@ impl Mob {
         self.velocity = Vector3::FORWARD * random_speed;
         let rotation = owner.rotation();
         self.velocity = self.velocity.rotated(Vector3::UP, rotation.y);
+
+        let animation_player = unsafe { owner.get_node_as::<AnimationPlayer>("AnimationPlayer").unwrap() };
+        animation_player.set_speed_scale((random_speed / self.min_speed) as f64);
     }
 
     #[export]
