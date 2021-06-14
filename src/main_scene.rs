@@ -24,10 +24,7 @@ impl Main {
     #[export]
     fn on_mob_timer_timeout(&self, owner: &Node) {
         let mob_scene: Ref<KinematicBody, _> = instance_scene(&self.mob);
-        let spawner = unsafe {
-            owner.get_node_as::<Spatial>("Spawner")
-            .unwrap()
-        };
+        let spawner = unsafe { owner.get_node_as::<Spatial>("Spawner").unwrap() };
         let spawn_location = spawner.transform().origin;
 
         let target = unsafe { owner.get_node_as::<Spatial>("ShootAt").unwrap() };
@@ -38,11 +35,7 @@ impl Main {
 
         let mob = mob_scene.cast_instance::<Mob>().unwrap();
         mob.map_mut(|mob, mob_owner| {
-            mob.initialize(
-                &mob_owner,
-                &spawn_location,
-                &target_position,
-            );
+            mob.initialize(&mob_owner, &spawn_location, &target_position);
         })
         .unwrap();
     }
