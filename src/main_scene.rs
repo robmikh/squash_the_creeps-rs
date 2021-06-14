@@ -25,18 +25,14 @@ impl Main {
     #[export]
     fn on_mob_timer_timeout(&self, owner: &Node) {
         let mob_scene: Ref<KinematicBody, _> = instance_scene(&self.mob);
-        let mob_spawn_location = unsafe {
-            owner
-                .get_node_as::<PathFollow>("SpawnPath/SpawnLocation")
-                .unwrap()
+        let spawner = unsafe {
+            owner.get_node_as::<Spatial>("Spawner")
+            .unwrap()
         };
+        let spawn_location = spawner.transform().origin;
 
-        let mut rng = rand::thread_rng();
-        //mob_spawn_location.set_unit_offset(rng.gen_range(0.0..1.0));
-        mob_spawn_location.set_unit_offset(0.625);
-        let player = unsafe { owner.get_node_as::<KinematicBody>("Player").unwrap() };
-        let player_position = player.transform().origin;
-        let player_position = Vector3::new(6.665353, 0.8057515, 6.870081);
+        let target = unsafe { owner.get_node_as::<Spatial>("ShootAt").unwrap() };
+        let target_position = target.transform().origin;
 
         let mob_scene = unsafe { mob_scene.into_shared().assume_safe() };
         owner.add_child(mob_scene, false);
@@ -45,8 +41,8 @@ impl Main {
         mob.map_mut(|mob, mob_owner| {
             mob.initialize(
                 &mob_owner,
-                &mob_spawn_location.translation(),
-                &player_position,
+                &spawn_location,
+                &target_position,
             );
         })
         .unwrap();

@@ -34,13 +34,7 @@ impl Mob {
         owner.set_translation(*start_position);
         owner.look_at(*player_position, Vector3::UP);
 
-        let mut rng = rand::thread_rng();
-        let pi = std::f64::consts::PI;
-        //owner.rotate_y(rng.gen_range(-pi / 4.0..pi / 4.0));
-        //godot_print!("{}, {}, {}", player_position.x, player_position.y, player_position.z);
-
-        let random_speed = rng.gen_range(self.min_speed..self.max_speed);
-        self.velocity = Vector3::FORWARD * random_speed;
+        self.velocity = Vector3::FORWARD * self.max_speed;
         let rotation = owner.rotation();
         self.velocity = self.velocity.rotated(Vector3::UP, rotation.y);
     }
