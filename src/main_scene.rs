@@ -20,6 +20,25 @@ impl Main {
     }
 
     #[export]
+    fn _ready(&self, owner: &Node) {
+        let ui = unsafe { owner.get_node_as::<Control>("UserInterface").unwrap() };
+        let retry = unsafe { ui.get_node_as::<ColorRect>("Retry").unwrap() };
+        retry.hide();
+    }
+
+    #[export]
+    fn _unhandled_input(&self, owner: &Node, event: Ref<InputEventKey>) {
+        let event = unsafe { event.assume_safe() };
+        let ui = unsafe { owner.get_node_as::<Control>("UserInterface").unwrap() };
+        let retry = unsafe { ui.get_node_as::<ColorRect>("Retry").unwrap() };
+        if event.is_action_pressed("ui_accept", false) && retry.is_visible() {
+            let tree = owner.get_tree().unwrap();
+            let tree = unsafe { tree.assume_safe() };
+            tree.reload_current_scene().unwrap();
+        }
+    }
+
+    #[export]
     fn on_mob_timer_timeout(&self, owner: &Node) {
         let mob_scene: Ref<KinematicBody, _> = instance_scene(&self.mob);
         let mob_spawn_location = unsafe {
@@ -62,6 +81,9 @@ impl Main {
     fn on_player_hit(&self, owner: &Node) {
         let timer = unsafe { owner.get_node_as::<Timer>("MobTimer").unwrap() };
         timer.stop();
+        let ui = unsafe { owner.get_node_as::<Control>("UserInterface").unwrap() };
+        let retry = unsafe { ui.get_node_as::<ColorRect>("Retry").unwrap() };
+        retry.show();
     }
 }
 
