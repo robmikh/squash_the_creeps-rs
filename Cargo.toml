@@ -8,5 +8,5 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-#gdnative = { git = "https://github.com/godot-rust/godot-rust" }
-gdnative = { git = "https://github.com/robmikh/godot-rust", branch = "issue751" }
+gdnative = { git = "https://github.com/godot-rust/godot-rust" }
+#gdnative = { git = "https://github.com/robmikh/godot-rust", branch = "issue751" }

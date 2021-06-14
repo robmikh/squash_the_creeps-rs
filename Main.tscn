@@ -9,17 +9,17 @@ extents = Vector3( 30, 1, 30 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 60, 2, 60 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.0941176, 0.698039, 0.0901961, 1 )
 
-[sub_resource type="CubeMesh" id=7]
-material = SubResource( 6 )
+[sub_resource type="CubeMesh" id=4]
+material = SubResource( 3 )
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=5]
 albedo_color = Color( 0, 0.0627451, 1, 1 )
 
-[sub_resource type="CubeMesh" id=9]
-material = SubResource( 8 )
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 5 )
 
 [node name="Main" type="Node"]
 script = ExtResource( 2 )
@@ -56,7 +56,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.665, 0, -3.93943 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ShootAt"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="Spawner" type="Spatial" parent="."]
@@ -64,7 +64,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11.5151 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Spawner"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-mesh = SubResource( 9 )
+mesh = SubResource( 6 )
 material/0 = null
 
 [connection signal="timeout" from="MobTimer" to="." method="on_mob_timer_timeout"]
