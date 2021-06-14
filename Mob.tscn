@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Mob.gdns" type="Script" id=2]
+[ext_resource path="res://Mob.gd" type="Script" id=1]
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 1, 0, 0, 1 )
@@ -12,7 +12,7 @@ material = SubResource( 2 )
 extents = Vector3( 0.873849, 0.980782, 1.00394 )
 
 [node name="Mob" type="KinematicBody"]
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 
 [node name="Pivot" type="Spatial" parent="."]
 

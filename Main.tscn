@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Main.gdns" type="Script" id=2]
+[ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Mob.tscn" type="PackedScene" id=3]
 
 [sub_resource type="BoxShape" id=1]
@@ -22,8 +22,8 @@ albedo_color = Color( 0, 0.0627451, 1, 1 )
 material = SubResource( 8 )
 
 [node name="Main" type="Node"]
-script = ExtResource( 2 )
-mob = ExtResource( 3 )
+script = ExtResource( 1 )
+mob_scene = ExtResource( 3 )
 
 [node name="Ground" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
