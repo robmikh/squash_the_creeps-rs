@@ -16,7 +16,6 @@ _global_script_class_icons={
 
 config/name="Squash the Creeps (3D)"
 run/main_scene="res://Main.tscn"
-config/icon="res://icon.png"
 
 [display]
 
